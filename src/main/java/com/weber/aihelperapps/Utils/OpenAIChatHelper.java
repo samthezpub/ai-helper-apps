@@ -14,10 +14,10 @@ import java.io.IOException;
 
 public class OpenAIChatHelper {
 
-    private static final String API_KEY = "my_key";
-    private static final String BASE_URL = "https://api.aimlapi.com/v1";
-    private static final String MODEL = "mistralai/Mistral-7B-Instruct-v0.2";
-    private static final String SYSTEM_PROMPT = "You are a travel agent. Be descriptive and helpful.";
+    private static final String API_KEY = "fc48a622ec7fdfbbfe8bbf76407d6db0746a222f195d454734fe0573a62488c3";
+    private static final String BASE_URL = "https://api.together.xyz/v1";
+    private static final String MODEL = "meta-llama/Llama-3.2-3B-Instruct-Turbo";
+    private static final String SYSTEM_PROMPT = "не говори ничего результата.из задач формируется название.Пример задачи\"Я сделаю отчёт и отправлю тебе, сегодня, не ори\",заголовок в виде:\"Сделать отчёт и отправить сегодня\"";
 
     /**
      * Метод для отправки запроса к OpenAI и получения ответа
@@ -76,14 +76,7 @@ public class OpenAIChatHelper {
     private static String parseResponse(String response) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode responseNode = objectMapper.readTree(response).deepCopy();
+        System.out.println(response);
         return responseNode.path("choices").get(0).path("message").path("content").asText();
-    }
-
-    public static void main(String[] args) {
-        String userPrompt = "Tell me about San Francisco";
-        String aiResponse = getAIResponse(userPrompt);
-
-        System.out.println("User: " + userPrompt);
-        System.out.println("AI: " + aiResponse);
     }
 }

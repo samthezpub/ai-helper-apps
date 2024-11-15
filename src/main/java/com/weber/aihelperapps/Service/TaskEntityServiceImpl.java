@@ -11,14 +11,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class TaskEntityService {
+public class TaskEntityServiceImpl implements TaskEntityService {
     private final TaskRepository taskRepository;
 
-     void createTask(TaskEntity taskEntity) {
+    public void createTask(TaskEntity taskEntity) {
         taskRepository.save(taskEntity);
     }
 
-     void changeTaskStatus(Long id) throws TaskNotFoundException {
+    public void changeTaskStatus(Long id) throws TaskNotFoundException {
         TaskEntity task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Задание не найдено!"));
 
         task.setStatus(TaskStatusEnum.IN_PROGRESS);
@@ -26,7 +26,7 @@ public class TaskEntityService {
         taskRepository.save(task);
     }
 
-     List<TaskEntity> findAllInProgressByUserId(Long userId) {
+     public List<TaskEntity> findAllInProgressByUserId(Long userId) {
         return taskRepository.getAllInProgressByUserId(userId);
     }
 }
